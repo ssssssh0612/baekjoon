@@ -18,7 +18,6 @@ public class 부분합_1806 {
         for (int i = 0; i < n; i++) {
             list.add(Integer.parseInt(st.nextToken()));
         }
-sdf
         result(list, m);
         if (check) {
             System.out.println(RESULT);
@@ -29,25 +28,21 @@ sdf
     public static void result(List<Integer> list, int m) {
         int start = 0;
         int end = 0;
-        int total = 0;
+        int total = list.get(0); // 0 번째 더해주고
         while (start < list.size() && end < list.size()) {
-            for (int i = start; i <= end; i++) {
-                total += list.get(i);
-            }
-//            System.out.println("Start = "+ start + ", end = " + end + ", total = " + total);
-            if( total == m ){
-                RESULT = Math.min(RESULT, Math.abs(end - start + 1));
-                check = true;
-                break;
-            }
             if( total < m ){
+                // end 가 올라가면 현재 end 값의 list를 더해줌
                 end++;
+                if( end < list.size() ){
+                    total += list.get(end);
+                }
             }else{
-                RESULT = Math.min(RESULT, Math.abs(end - start + 1));
+                RESULT = Math.min(RESULT, end - start + 1);
                 check = true;
+                int number = list.get(start);
+                total -= number;
                 start++;
             }
-            total = 0;
         }
     }
 }
