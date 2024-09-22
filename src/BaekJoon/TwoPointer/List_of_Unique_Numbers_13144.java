@@ -3,22 +3,25 @@ package BaekJoon.TwoPointer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class List_of_Unique_Numbers_13144 {
     static int result = 0;
-    static int[] arr;
+    static List<Integer> arr = new ArrayList<Integer>();
+    static int max = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int a = Integer.parseInt(br.readLine());
-        arr = new int[a];
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < a; i++) {
+            arr.add(Integer.parseInt(st.nextToken()));
+            max = Math.max(max, arr.get(i));
         }
         result += a;
-        for (int i = 2; i <= arr.length; i++) {
+        for (int i = 2; i <= arr.size(); i++) {
             arrLength(i);
         }
         System.out.println(result);
@@ -30,26 +33,38 @@ public class List_of_Unique_Numbers_13144 {
         int start = 0;
         int end = length - 1;
         // 내가 보는 구간의 arr이 겹치는지 체크함
-        boolean[] visited = new boolean[100001];
+        int[] visited = new int[max+1];
+        boolean check = true;
         for (int i = start; i <= end; i++) {
-            if(!visited[i]) {
-                visited[arr[i]] = true;
+            if(visited[arr.get(i)] == 0) {
+                visited[arr.get(i)]++;
             }else{
-                result++;
+                visited[arr.get(i)]++;
+                check = false;
             }
         }
+        if (check){
+            result++;
+        }
         while (checking(start) && checking(end)) {
-            visited[arr[start]] = false;
+            visited[arr.get(start)]--;
             start++;
             end++;
-            if (checking(end) && visited[arr[end]]){
-                result++;
+            if (checking(end)){
+                if(visited[arr.get(end)] == 0){
+                    result++;
+                    visited[arr.get(end)]++;
+                }else{
+                    visited[arr.get(end)]++;
+                }
+            }else{
+                break;
             }
         }
     }
 
     public static boolean checking(int number) {
-        return number >= 0 && number < arr.length;
+        return number >= 0 && number < arr.size();
     }
 
 }
