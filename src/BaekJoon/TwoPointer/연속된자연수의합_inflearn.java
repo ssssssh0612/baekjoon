@@ -12,24 +12,20 @@ class 연속된자연수의합_inflearn {
         int end = 2;
         int total = 3;
         int result = 0;
-        while (end < a && start < a) {
-            if (total == a) {
+        while (end < a / 2 + 2 && start < a / 2 + 2) {
+//            System.out.println("start Total = " + total);
+            if(total == a) {
                 result++;
-                if( end - start > 0 ){
-                    start -= total;
-                    start++;
-                    end++;
-                    end += total;
-                }
-            } else if (total < a/2 + 1) {
-                end++;
-                end += total;
-            } else if (total > a/2 + 1 ) {
-                start -= total;
+                total -= start;
                 start++;
-            } else {
+            }else if (total < a){
                 end++;
-                end += total;
+//                System.out.println("end = " + end);
+                total += end;
+//                System.out.println("total = " + total);
+            }else if (total > a){
+                total -= start;
+                start++;
             }
         }
         System.out.println(result);
