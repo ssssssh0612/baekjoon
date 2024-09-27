@@ -1,0 +1,51 @@
+package BaekJoon.Hash;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class 매출액의종류_inflearn {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        int indexN = a - b + 1;
+        int[] arr = new int[a];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < a; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        int start = 0;
+        int end = b - 1;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < b; i++) {
+            int number = arr[i];
+            map.put(number, map.getOrDefault(number,0) + 1);
+        }
+        System.out.print(map.size()+" ");
+        while (end < a) {
+            map.put(arr[start], map.getOrDefault(arr[start], null) - 1);
+            if(map.get(arr[start]) == 0){
+                map.remove(arr[start]);
+            }
+            start++;
+            end++;
+            if(!checking(end,arr)){
+                break;
+            }
+//            System.out.println("start = "+start+", end = "+end);
+            map.put(arr[end], map.getOrDefault(arr[end], 0) + 1);
+//            for (Integer i : map.keySet()) {
+//                System.out.print(i+" ");
+//            }
+            System.out.print(map.size()+" ");
+        }
+    }
+    public static boolean checking(int number, int[] arr){
+        return arr.length > number && number >= 0;
+    }
+}
