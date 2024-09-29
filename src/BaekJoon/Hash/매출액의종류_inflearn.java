@@ -37,11 +37,7 @@ public class 매출액의종류_inflearn {
             if(!checking(end,arr)){
                 break;
             }
-//            System.out.println("start = "+start+", end = "+end);
             map.put(arr[end], map.getOrDefault(arr[end], 0) + 1);
-//            for (Integer i : map.keySet()) {
-//                System.out.print(i+" ");
-//            }
             System.out.print(map.size()+" ");
         }
     }
