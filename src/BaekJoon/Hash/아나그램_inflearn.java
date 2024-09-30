@@ -11,20 +11,52 @@ public class 아나그램_inflearn {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String a = br.readLine();
         String b = br.readLine();
-        HashMap<Character,Integer> map = new HashMap<>();
+        HashMap<Character,Integer> hashMap = new HashMap<>();
         for (int i = 0; i < a.length(); i++) {
-            char character = a.charAt(i);
-            map.put(character, map.getOrDefault(character,0)+1);
+            char ch = a.charAt(i);
+            hashMap.put(ch,hashMap.getOrDefault(ch,0)+1);
         }
+
         for (int i = 0; i < b.length(); i++) {
-            char character = b.charAt(i);
-            if(!map.containsKey(character) || map.get(character) == null){
+            char ch = b.charAt(i);
+            hashMap.put(ch,hashMap.getOrDefault(ch,0)-1);
+        }
+        for(Character ch:hashMap.keySet()){
+            if(hashMap.get(ch)!=0){
                 System.out.println("NO");
                 return;
-            }else{
-                map.put(character, map.get(character)-1);
             }
         }
         System.out.println("YES");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        HashMap<Character,Integer> map = new HashMap<>();
+//        for (int i = 0; i < a.length(); i++) {
+//            char character = a.charAt(i);
+//            map.put(character, map.getOrDefault(character,0)+1);
+//        }
+//        for (int i = 0; i < b.length(); i++) {
+//            char character = b.charAt(i);
+//            if(!map.containsKey(character) || map.get(character) == null){
+//                System.out.println("NO");
+//                return;
+//            }else{
+//                map.put(character, map.get(character)-1);
+//            }
+//        }
+//        System.out.println("YES");
     }
 }
