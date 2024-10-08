@@ -23,11 +23,5 @@ public class 트럭_13335 {
         int index = 0;
         int weight = queueArr[0];
         queue.add(queueArr[index]);
-        while(!queue.isEmpty()) {
-            
-            if(queue.size() < k && ) {
-
-            }
-        }
     }
 }
