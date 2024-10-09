@@ -13,6 +13,8 @@ public class 캐슬디펜스_17135 {
     static int[] dy = {-1,1,0,0};
     static int length;
     static int killCount  = 0;
+    static int result = Integer.MIN_VALUE;
+    static int[][] copyGraph;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,25 +22,21 @@ public class 캐슬디펜스_17135 {
         int x = Integer.parseInt(st.nextToken()); // m
         length = Integer.parseInt(st.nextToken());
         graph = new int[y + 1][x];
+        copyGraph = new int[y + 1][x];
         for (int i = 0; i < y; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < x; j++) {
-                graph[i][j] = Integer.parseInt(st.nextToken());
+                int num = Integer.parseInt(st.nextToken());
+                graph[i][j] = num;
+                copyGraph[i][j] = num;
             }
         }
         arr = new int[3];
-        visited = new boolean[y];
-
-        for (int i = 0; i < y + 1; i++) {
-            for (int j = 0; j < x; j++) {
-                System.out.print(graph[i][j] + " ");
-            }
-            System.out.println();
-        }
+        visited = new boolean[x];
         // 일단 백트래킹으로 궁수의 위치 체크
 
         backTracking(0,0);
-
+        System.out.println(result);
 
     }
     public static void checking(){
@@ -51,19 +49,29 @@ public class 캐슬디펜스_17135 {
         }
         System.out.println();
     }
+    public static void copyGraph(){
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[0].length; j++) {
+                graph[i][j] = copyGraph[i][j];
+            }
+        }
+    }
     public static void backTracking(int depth, int number){
         if( depth == 3){
             // 현재 선택된 궁수들의위치로 bfs를 돌아서
             for (int i = 0; i < arr.length; i++) {
                 graph[graph.length -1][arr[i]] = 1;
+//                System.out.print(arr[i]+" ");
             }
-            checking();
-            kill();
-            for (int i = 0; i < arr.length; i++) {
-                graph[graph.length - 1][arr[i]] = 0;
+            for (int i = 0; i < graph.length - 1; i++) {
+                kill();
+                down();
+//                checking();
             }
+            result = Math.max(result , killCount);
             // 현재 궁수들의 위치에서 bfs 를 돌려 가장 가깝고, 가장 왼쪽에 있는 적을 죽여야함
-
+            killCount = 0;
+            copyGraph();
             return;
         }
         for (int i = 0; i < visited.length; i++) {
@@ -84,10 +92,10 @@ public class 캐슬디펜스_17135 {
             queue.add(new int[]{graph.length - 1, arr[i]});
             int[] killPos = new int[]{-1,-1};
             int distance = 1;
+            boolean[][] check = new boolean[graph.length][graph[0].length];
             while(!queue.isEmpty()){
                 int queueSize = queue.size();
                 boolean flag = false;
-                boolean[][] check = new boolean[graph.length][graph[0].length];
 //                System.out.println("queueSize"+queueSize+" i = "+ i );
                 while(queueSize > 0){
                     queueSize--;
@@ -118,6 +126,7 @@ public class 캐슬디펜스_17135 {
                 }
                 distance++;
                 if(flag){
+//                    System.out.println("?????");
                     killList.add(new int[]{killPos[0],killPos[1]});
                     break;
                 }
@@ -144,6 +153,7 @@ public class 캐슬디펜스_17135 {
                 }else{
                     int num = graph[i][j];
                     graph[i][j] = 0;
+                    graph[i + 1][j] = num ;
                 }
             }
         }
