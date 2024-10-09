@@ -39,13 +39,13 @@ public class 아기상어_16236 {
 
     public static void bfs(){
         Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{sharkPos[0],sharkPos[1]});
-        boolean[][] visited = new boolean[graph.length][graph[0].length];
-        int eatY = -1;
-        int eatX = -1;
-        visited[sharkPos[0]][sharkPos[1]] = true;
         int distance = 0;
         while(fish > 0){
+            int eatY = -1;
+            int eatX = -1;
+            boolean[][] visited = new boolean[graph.length][graph[0].length];
+            visited[sharkPos[0]][sharkPos[1]] = true;
+            queue.offer(new int[]{sharkPos[0],sharkPos[1]});
             while (!queue.isEmpty()) {
                 int size = queue.size();
                 boolean flag = false;
