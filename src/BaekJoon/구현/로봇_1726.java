@@ -1,7 +1,5 @@
 package BaekJoon.구현;
 
-import BaekJoon.Strig.팰린드롬replaceAll_inflearn;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +7,7 @@ import java.util.*;
 
 public class 로봇_1726 {
     // 동 서 남 북
-    // 0  1 2 3
+    // 0 1 2 3
     static int[] dx = {1,-1,0,0};
     static int[] dy = {0,0,1,-1};
     static int[] startPos = new int[3];
@@ -66,18 +64,12 @@ public class 로봇_1726 {
             int nowX = robot.x;
             int nowDir = robot.dir;
             int nowCnt = robot.cnt;
-//            System.out.println(nowY+" "+nowX+" "+nowDir+" "+nowCnt);
-
-//            for (int i = 0; i < 4; i++) {
-//                visited[endPos[0]][endPos[1]][endPos[2]] = false;
-//            }
-
             // endPos 와 같은지체크
             if(nowY == endPos[0] && nowX == endPos[1] && nowDir == endPos[2]){
                 result = robot.cnt;
                 break;
             }
-            // 회전 체크
+            // 회전할 수 있는지 없는지에 대해 체크해주기
             if (nowDir == 0) {
                 if(!visited[nowY][nowX][2] && graph[nowY][nowX] == 0){
                     queue.add(new Robot(nowY,nowX,2,nowCnt+1));
@@ -123,7 +115,7 @@ public class 로봇_1726 {
             }
 
             for(int i = 1; i <= 3; i ++){
-                // 현재 방향으로 1,2,3 갈 수 있는지에 대해 검사
+                // 현재 방향으로 1칸, 2칸, 3칸 갈 수 있는지에 대해 검사
                 int newY = nowY + i * dy[nowDir];
                 int newX = nowX + i * dx[nowDir];
                 if(i == 1){
@@ -151,9 +143,8 @@ public class 로봇_1726 {
             }
         }
     }
+    // 해당 좌표가 그래프안에 들어갈 수 있는지 없는지 체크해주기
     public static boolean checking(int y, int x){
         return y >= 0 && x >= 0 && y < graph.length && x < graph[0].length;
     }
-
-
 }
