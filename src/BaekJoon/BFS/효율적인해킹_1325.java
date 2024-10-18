@@ -1,5 +1,7 @@
 package BaekJoon.BFS;
 
+import BaekJoon.Strig.팰린드롬replaceAll_inflearn;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,10 +9,11 @@ import java.util.*;
 
 public class 효율적인해킹_1325 {
     static List<List<Integer>> list = new ArrayList<>();
+    static int count = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        List<int[]> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
@@ -25,32 +28,34 @@ public class 효율적인해킹_1325 {
             list.get(b).add(a);
         }
         for (int i = 1; i <= n; i++) {
-            boolean[] visited = new boolean[n+1];
+            boolean[] visited = new boolean[n + 1];
             visited[i] = true;
-            int count = dfs(i,visited,0);
-            int[] arr = new int[]{i,count};
-            result.add(arr);
+            dfs(i, visited);
+            result.add(count);
+            count = 0;
         }
-        // 1번째 인덱스를 기준으로 내림차순 정렬
-        Collections.sort(result, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                // 1번째 인덱스(o1[1], o2[1])를 기준으로 내림차순 정렬
-                return Integer.compare(o2[1], o1[1]);
+        int max = Integer.MIN_VALUE;
+        for (Integer number : result) {
+            if (max < number) {
+                max = number;
             }
-        });
-        for (int i = 0; i < result.size(); i++) {
-            System.out.println(result.get(i)[0]+" "+ result.get(i)[1]);
+        }
+        int index = 1;
+        for (Integer number : result) {
+            if (max == number) {
+                System.out.print(index + " ");
+            }
+            index++;
         }
     }
-    public static int dfs(int number, boolean[]visited, int count){
-        for (int i = 1; i <= list.get(number).size(); i++) {
-            if(!visited[list.get(number).get(i)]){
-                int newCount = count+1;
-                visited[list.get(number).get(i)] = true;
-                dfs(list.get(number).get(i),visited,newCount);
+
+    public static void dfs(int number, boolean[] visited) {
+        for(Integer i : list.get(number)) {
+            if (!visited[i]) {
+                visited[i] = true;
+                dfs(i, visited);
+                count++;
             }
         }
-        return count;
     }
 }
