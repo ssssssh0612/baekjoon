@@ -30,32 +30,26 @@ public class 결혼식_5567 {
         for (int i = 0; i < list.get(1).size(); i++) {
             result++;
             list2.add(list.get(1).get(i));
+//            System.out.println(list.get(1).get(i));
             visited[list.get(1).get(i)] = true;
         }
         for (int i = 0; i < list2.size(); i++) {
             int Node = list2.get(i);
             for (int j = 0; j < list.get(Node).size(); j++) {
                 if(!visited[list.get(Node).get(j)]){
+//                    System.out.println(list.get(Node).get(j));
+//                    visited[list.get(Node).get(j)] = true;
                     result++;
                 }
             }
         }
-        System.out.println(result);
-    }
-    public static void dfs(int number, int count){
-        if (count == 2) {
-            return;
-        }
-        for (int i = 0; i < list.get(number).size(); i++) {
-            if(!visited[list.get(number).get(i)]){
-                System.out.println(list.get(number).get(i));
-                result++;
-                visited[list.get(number).get(i)] = true;
-                dfs(list.get(number).get(i),count + 1);
+        int fucking = 0;
+        for (int i = 2; i < visited.length; i++) {
+            if(visited[i]){
+                fucking++;
             }
         }
-    }
-    public static void bfs(int number, int count){
-        Queue<Integer> queue = new LinkedList<>();
+        System.out.println(fucking);
+        System.out.println(result);
     }
 }
