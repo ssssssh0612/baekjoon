@@ -69,7 +69,7 @@ public class 탈출_3055 {
                 int nowX = now[1] + dx[i];
                 if(checking(nowY,nowX) && !visited[nowY][nowX] && graph[nowY][nowX] != -3 &&
                         graph[nowY][nowX] != -2){
-                    
+
                 }
             }
         }
