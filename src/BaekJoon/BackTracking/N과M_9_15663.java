@@ -6,70 +6,40 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class N과M_9_15663 {
-    static int[] arr;
-    static List<Integer> list;
-    static int n;
-    static boolean[] visited;
-    static List<int[]> result = new ArrayList<>();
+    static int depth;
+    static int[] Arr;
+    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int length = Integer.parseInt(st.nextToken());
-        n = Integer.parseInt(st.nextToken()); // depth
-        list = new ArrayList<>();
-        arr = new int[n];
-        visited = new boolean[length];
+        depth = Integer.parseInt(st.nextToken());
+        int[] arr = new int[length];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < length; i++) {
-            list.add(Integer.parseInt(st.nextToken()));
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        Collections.sort(list);
-        backTracking(0);
+        Arrays.sort(arr);
+        Arr = new int[depth];
+        boolean[] visited = new boolean[length];
+        backTracking(0,arr, visited,0);
+        System.out.println(sb);
     }
-    public static void backTracking(int depth) {
-        if(depth == n) {
-            if(!result.isEmpty()){
-                for (int i = 0; i < result.size(); i++) {
-                    int[] check = result.get(i);
-                    int count = 0;
-                    for (int j = 0; j < n; j++) {
-                        if(arr[j] == check[j]) {
-                            count++;
-                        }
-                    }
-                    if(count == n) {
-                        return;
-                    }
-                }
-
-                int[] newArr = new int[n];
-                for (int i = 0; i < n; i++) {
-                    int number = arr[i];
-                    newArr[i] = number;
-                }
-                result.add(newArr);
-                for (int i = 0; i < n; i++) {
-                    System.out.print(newArr[i]+" ");
-                }
-            }else{
-                int[] newArr = new int[n];
-                for (int i = 0; i < n; i++) {
-                    int number = arr[i];
-                    newArr[i] = number;
-                }
-                result.add(newArr);
-                for (int i = 0; i < n; i++) {
-                    System.out.print(newArr[i]+" ");
-                }
+    public static void backTracking(int nowDepth, int[] arr, boolean[] visited, int number) {
+        if(depth == nowDepth){
+            for (int i = 0; i < Arr.length; i++) {
+                sb.append(Arr[i]).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
             return;
         }
-        for (int i = 0; i < list.size(); i++) {
-            if(!visited[i]) {
+        int beforeNum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] != beforeNum && number <= arr[i]) {
+                beforeNum = arr[i];
+                Arr[nowDepth] = arr[i];
                 visited[i] = true;
-                arr[depth] = list.get(i);
-                backTracking(depth + 1);
+                backTracking(nowDepth + 1, arr, visited, arr[i]);
                 visited[i] = false;
             }
         }

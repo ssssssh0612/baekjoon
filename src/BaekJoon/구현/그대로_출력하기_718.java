@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class 그대로_출력하기_718 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        System.out.println(1/2);
         boolean flag = true;
         while (flag){
             int count = 0;
