@@ -14,63 +14,80 @@ public class 등수구하기_1205 {
         int length = Integer.parseInt(st.nextToken());
         int number = Integer.parseInt(st.nextToken());
         int maxLength = Integer.parseInt(st.nextToken());
+        if(length == 0){
+            System.out.println(1);
+            return;
+        }
         st = new StringTokenizer(br.readLine());
         List<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < length; i++) {
             list.add(Integer.parseInt(st.nextToken()));
         }
-        if (maxLength == list.size()) {
-            // 꽉 차있다면 큰숫자부터 돌면서 number 보다 작거나 같은 숫자가 있는지
-            // 가장 작은숫자를 찾아보기
-            int min = Integer.MAX_VALUE;
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) < min) {
-                    min = list.get(i);
-                }
-            }
-            if (number == min) {
+        // 꽉 차있는지 아닌지
+        if(length == maxLength){
+            // 꽉 차있는 경우
+            int minNum = list.get(length - 1);
+            if(minNum >= number){
                 System.out.println(-1);
-            } else {
-                if (number >= list.get(0)) {
-                    System.out.println(1);
-                } else {
-                    int addIndex = 0;
-                    for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i) < number) {
-                            list.add(number);
-                            break;
-                        }
-                    }
-                    int[] result = new int[list.size()];
-                    for (int i = 1; i < list.size(); i++) {
-                        if (list.get(i) == list.get(i - 1)) {
-                            result[i] = result[i - 1];
-                        } else {
-                            result[i] = i + 1;
-                        }
-                    }
-                    System.out.println(result[addIndex]);
+                return;
+            }
+
+            if(number >= list.get(0)){
+                System.out.println(1);
+                return;
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                int nowNum = list.get(i);
+                if(nowNum <= number){
+                    list.remove(list.size() - 1);
+                    list.add(i,number);
                 }
             }
-        } else {
-            if (number >= list.get(0)) {
-                System.out.println(1);
-            } else {
-                int[] result = new int[list.size()];
-                for (int i = 1; i < list.size(); i++) {
-                    if( number >= list.get(i)){
-                        list.add(i,number);
-                    }
+            int[] result = new int[list.size()];
+            result[0] = 1;
+            for (int i = 1; i < list.size(); i++) {
+                if(list.get(i) == list.get(i - 1)){
+                    result[i] = result[i - 1];
+                }else{
+                    result[i] = i + 1;
                 }
-                for (int i = 1; i < list.size(); i++) {
-                    if (list.get(i) == list.get(i - 1)) {
-                        result[i] = result[i - 1];
-                    } else {
-                        result[i] = i + 1;
-                    }
-                    if(list.get(i) == number){
-                        System.out.println(result[i]);
-                    }
+                if(list.get(i) == number){
+                    System.out.println(result[i]);
+                    return;
+                }
+            }
+        }else{
+            // 꽉 차 있지 않다면
+            boolean flag = false;
+
+            if(list.get(0) <= number){
+                System.out.println(1);
+                return;
+            }
+            for (int i = 0; i < list.size(); i++) {
+                int nowNum = list.get(i);
+                if(nowNum <= number){
+                    flag = true;
+                    list.remove(list.size() - 1);
+                    list.add(i,number);
+                }
+            }
+            if(!flag){
+                list.add(number);
+            }
+
+            int[] result = new int[list.size()];
+            result[0] = 1;
+            for (int i = 1; i < list.size(); i++) {
+                if(list.get(i) == list.get(i - 1)){
+                    result[i] = result[i - 1];
+                }else{
+                    result[i] = i + 1;
+                }
+                if(list.get(i) == number){
+                    System.out.println(result[i]);
+                    return;
                 }
             }
         }
