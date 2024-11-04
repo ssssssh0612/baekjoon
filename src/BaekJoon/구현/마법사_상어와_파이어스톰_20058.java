@@ -28,16 +28,6 @@ public class 마법사_상어와_파이어스톰_20058 {
         System.out.println(iceCount);
     }
 
-    //3 1
-//1 2 3 4 5 6 7 8
-//8 7 6 5 4 3 2 1
-//1 2 3 4 5 6 7 8
-//8 7 6 5 4 3 2 1
-//1 2 3 4 5 6 7 8
-//8 7 6 5 4 3 2 1
-//1 2 3 4 5 6 7 8
-//8 7 6 5 4 3 2 1
-//3
     public static void countIce2() {
         for (int i = 0; i < graph.length; i++) {
             for (int j = 0; j < graph.length; j++) {
