@@ -13,8 +13,6 @@ public class A_화살표_B_16953 {
         graph = new long[(int) end];
 
 
-
-
     }
     public static void bfs(long startNum){
         Queue<Long[]> queue = new LinkedList<>();
