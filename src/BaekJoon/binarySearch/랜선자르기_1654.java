@@ -12,7 +12,6 @@ public class 랜선자르기_1654 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         input(br);
-//        System.out.println(result - 1);
     }
     public static void input( BufferedReader br) throws IOException {
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -29,13 +28,11 @@ public class 랜선자르기_1654 {
         while(start < end){
             long resultCount = 0;
             mid = (start + end) / 2 ;
+            System.out.println(" mid = " + mid);
             for(int i = 0; i < arr.length; i++){
                 resultCount += (arr[i] / mid);
             }
-//            System.out.println("mid = "+ mid);
-//            System.out.println("resultCount = "+ resultCount);
-
-
+            System.out.println(" resultCount = "+ resultCount);
             if(resultCount < count){
                 end = mid;
             }else{
