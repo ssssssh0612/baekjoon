@@ -15,6 +15,10 @@ public class 점프점프_11060 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         input(br);
+        if(length == 1){
+            System.out.println(0);
+            return;
+        }
         bfs();
         if(!checking){
             System.out.println(-1);
@@ -28,23 +32,28 @@ public class 점프점프_11060 {
             arr[i] = Integer.parseInt(st.nextToken());
         }
         visited = new boolean[1000][100];
+        // visited를 꼭 생각해야하나 ?
+
     }
     public static void bfs(){
         Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{arr[0], 0});
-        visited[arr[0]][0] = true;
+        for(int i = 1; i <= arr[0]; i++){
+            queue.add(new int[]{i,1});
+            visited[i][1] = true;
+        }
         while(!queue.isEmpty()){
             int[] now = queue.poll();
+            int index = arr[now[0]];
             if(now[0] == length - 1){
                 checking = true;
-                System.out.println(now[1]+1);
+                System.out.println(now[1]);
                 return;
             }
-            for(int i = 1 ; i <= now[0]; i++){
-                int next = now[0] + i;
-                if(checking(next) && !visited[now[0]][i]){
+            for(int i = 1 ; i <= index; i++){
+                int next = now[0] + i ;
+                if(checking(next) && !visited[next][i]){
                     queue.add(new int[]{next, now[1] + 1});
-                    visited[now[0]][i] = true;
+                    visited[next][i] = true;
                 }
             }
         }
