@@ -47,6 +47,5 @@ public class 새로운_게임_2_17837 {
             int dir = Integer.parseInt(st.nextToken()) - 1;
             nodeList[y][x].add(new Horse(i+1,dir));
         }
-
     }
 }

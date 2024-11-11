@@ -8,69 +8,72 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class NM과K_1_18290 {
-    static List<int[]> list = new ArrayList<>();
     static int[][] graph;
-    static boolean[] visited;
+    static int m;
+    static boolean[][] visited;
     static int[] arr;
-    static int k;
     static int[] dx = {0,0,-1,1};
     static int[] dy = {-1,1,0,0};
-    static int result = Integer.MIN_VALUE;
+    static int MAX = Integer.MIN_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int y = Integer.parseInt(st.nextToken());
         int x = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
         graph = new int[y][x];
-        for (int i = 0; i < y; i++) {
+        visited = new boolean[y][x];
+        arr = new int[m * 2];
+        for(int i = 0; i < graph.length; i ++){
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < x; j++) {
+            for(int j = 0; j < graph[0].length; j ++){
                 graph[i][j] = Integer.parseInt(st.nextToken());
-                list.add(new int[]{i,j});
             }
         }
-        visited = new boolean[list.size()];
-        arr = new int[k * 2];
-        backTracking(0,0);
-        System.out.println(result);
+        backTracking(0,0,-1);
+        System.out.println(MAX);
     }
-    public static void backTracking(int depth, int number){
-        if( k * 2 == depth ){
-            for (int i = 0; i < arr.length; i += 2) {
-                int Y = arr[i];
-                int X = arr[i+1];
-                for (int j = 0; j < 4; j++) {
-                    int nowY = Y + dy[j];
-                    int nowX = X + dx[j];
-                    if(checking(nowY,nowX)){
-                        for (int l = 0; l < arr.length; l += 2) {
-                            if( nowY == arr[l] && nowX == arr[l + 1] ){
-                                return;
-                            }
+    public static void backTracking(int depth , int y, int x){
+        if(depth == m*2){
+            int total = 0;
+            for(int i = 0 ; i < arr.length; i += 2){
+                int nextY = arr[i];
+                int nextX = arr[i+1];
+                total += graph[nextY][nextX];
+                System.out.println("y = "+nextY+" x = " +nextX);
+            }
+            System.out.println("total = "+ total);
+            MAX = Math.max( total, MAX);
+            return;
+        }
+        for(int i = 0; i < graph.length; i ++){
+            for(int j = 0 ; j < graph[0].length; j ++){
+                if(!visited[i][j] && (y < i && x < j)){
+                    arr[depth] = i;
+                    arr[depth + 1] = j;
+                    visited[i][j] = true;
+                    for(int k = 0 ; k < 4; k ++){
+                        int nextY = i + dy[k];
+                        int nextX = j + dx[k];
+                        if(checking(nextY,nextX)){
+                            visited[nextY][nextX] = true;
+                        }
+                    }
+                    backTracking(depth + 2, i, j);
+                    visited[i][j] = false;
+                    for(int k = 0 ; k < 4; k ++){
+                        int nextY = i + dy[k];
+                        int nextX = j + dx[k];
+                        if(checking(nextY,nextX)){
+                            visited[nextY][nextX] = false;
                         }
                     }
                 }
             }
-            int checkResult = 0;
-            for (int i = 0; i < arr.length; i+=2) {
-                int num = graph[arr[i]][arr[i+1]];
-                checkResult += num;
-            }
-            result = Math.max(result,checkResult);
-            return;
-        }
-        for (int i = 0; i < list.size(); i++) {
-            if(!visited[i] && number <= i){
-                visited[i] = true;
-                arr[depth] = list.get(i)[0];
-                arr[depth + 1] = list.get(i)[1];
-                backTracking(depth + 2, i);
-                visited[i] = false;
-            }
         }
     }
-    public static boolean checking( int nowY , int nowX ){
-        return nowY >= 0 && nowX >= 0 && nowY < graph.length && nowX < graph[0].length;
+    public static boolean checking(int y, int x){
+        return y >= 0 && x >= 0 && y < graph.length && x < graph[0].length;
     }
 }
+
