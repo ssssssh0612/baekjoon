@@ -7,39 +7,38 @@ import java.util.*;
 
 public class N과M_9_15663 {
     static int depth;
-    static int[] Arr;
-    static StringBuilder sb = new StringBuilder();
+    static boolean[] visited;
+    static int[] arr;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int length = Integer.parseInt(st.nextToken());
         depth = Integer.parseInt(st.nextToken());
-        int[] arr = new int[length];
+        visited = new boolean[length];
+        arr = new int[depth];
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < length; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+        int[] arrList = new int[length];
+        for(int i = 0 ; i < arrList.length; i++){
+            arrList[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(arr);
-        Arr = new int[depth];
-        boolean[] visited = new boolean[length];
-        backTracking(0,arr, visited,0);
-        System.out.println(sb);
+        Arrays.sort(arrList);
+        backTracking(0,arrList);
     }
-    public static void backTracking(int nowDepth, int[] arr, boolean[] visited, int number) {
-        if(depth == nowDepth){
-            for (int i = 0; i < Arr.length; i++) {
-                sb.append(Arr[i]).append(" ");
+    public static void backTracking(int newDepth, int[] arrList){
+        if(depth == newDepth){
+            for(int i = 0; i < arr.length; i++){
+                System.out.print(arr[i] +" ");
             }
-            sb.append("\n");
+            System.out.println();
             return;
         }
-        int beforeNum = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if(arr[i] != beforeNum && number <= arr[i]) {
-                beforeNum = arr[i];
-                Arr[nowDepth] = arr[i];
+        int before = 0;
+        for(int i = 0 ; i < arrList.length; i++ ){
+            if(!visited[i] && (before != arrList[i])){
+                arr[newDepth] = arrList[i];
                 visited[i] = true;
-                backTracking(nowDepth + 1, arr, visited, arr[i]);
+                before = arrList[i];
+                backTracking(newDepth + 1, arrList );
                 visited[i] = false;
             }
         }
