@@ -1,75 +1,61 @@
 package BaekJoon.BackTracking;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class 부분수열의_합_1182 {
-    static int arr[];
     static int result;
     static int length;
-    static int count;
+    static int[] list;
+    static int resultCount = 0;
 
-    public static void main(String[] args) {
-        // 부분수열의 합이 result 를 만족하는 숫자의 갯수를 구하기
-        Scanner sc = new Scanner(System.in);
-        count = 0;
-        length = sc.nextInt();
-        result = sc.nextInt();
-        arr = new int[length];
-        for (int i = 0; i < length; i++) {
-            arr[i] = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        input(br);
+        for (int i = 1; i <= length; i++) {
+            boolean[] visited = new boolean[length];
+            int[] arr = new int[i];
+            backTracking(0, i, arr, visited, -1);
         }
-        for (int i = 0; i < length; i++) {
-            dfs(arr[i], i);
-        }
-            if (result == 0) {
-            count--;  // 공집합 제외
-        }
-        System.out.println(count);
+        System.out.println(resultCount);
     }
 
-    public static void dfs(int num, int index) {
-        for (int i = index + 1; i < length; i++) {
-            num = num + arr[i];
-            if (num == result) {
-                count++;
-            } else {
-                dfs(num, i);
+    public static void backTracking(int depth, int lastDepth, int[] arr, boolean[] visited, int number) {
+        if (depth == lastDepth) {
+            int resultCheck = 0;
+            for (int i = 0; i < arr.length; i++) {
+                resultCheck += arr[i];
+            }
+//            for (int i = 0; i < arr.length; i++) {
+//                System.out.print(arr[i] + " ");
+//            }
+//            System.out.println();
+            if (resultCheck == result) {
+                resultCount++;
+            }
+            return;
+        }
+        for (int i = 0; i < list.length; i++) {
+            if (!visited[i] && i > number) {
+                arr[depth] = list[i];
+                visited[depth] = true;
+                backTracking(depth + 1, lastDepth, arr, visited, i);
+                visited[depth] = false;
             }
         }
     }
+
+    public static void input(BufferedReader br) throws IOException {
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        length = Integer.parseInt(st.nextToken());
+        result = Integer.parseInt(st.nextToken());
+        list = new int[length];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < length; i++) {
+            list[i] = Integer.parseInt(st.nextToken());
+        }
+    }
 }
-//import java.util.Scanner;
-//
-//public class 부분수열의_합_1182 {
-//    static int[] arr;
-//    static int result;
-//    static int length;
-//    static int count;
-//
-//    public static void main(String[] args) {
-//        Scanner sc = new Scanner(System.in);
-//        length = sc.nextInt();
-//        result = sc.nextInt();
-//        arr = new int[length];
-//        for (int i = 0; i < length; i++) {
-//            arr[i] = sc.nextInt();
-//        }
-//        count = 0;
-//        dfs(0, 0);
-//        if (result == 0) {
-//            count--;  // 공집합 제외
-//        }
-//        System.out.println(count);
-//    }
-//
-//    public static void dfs(int sum, int index) {
-//        if (index == length) {
-//            if (sum == result) {
-//                count++;
-//            }
-//            return;
-//        }
-//        dfs(sum, index + 1);  // 현재 인덱스의 요소를 포함하지 않는 경우
-//        dfs(sum + arr[index], index + 1);  // 현재 인덱스의 요소를 포함하는 경우
-//    }
-//}

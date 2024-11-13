@@ -15,7 +15,7 @@ public class NM과K_1_18290 {
     static int[] dx = {0, 0, -1, 1};
     static int[] dy = {-1, 1, 0, 0};
     static int MAX = Integer.MIN_VALUE;
-    static List<int[]> list = new ArrayList<>();
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -36,10 +36,45 @@ public class NM과K_1_18290 {
     }
 
     public static void backTracking(int depth, int y, int x) {
-        if(depth == m * 2){
+        if (depth == m * 2) {
+            int total = 0;
+            for (int i = 0; i < arr.length; i += 2) {
+                int nextY = arr[i];
+                int nextX = arr[i + 1];
+                total += graph[nextY][nextX];
+//                System.out.println("y = "+nextY+" x = " +nextX);
+            }
+//            System.out.println("total = "+ total);
+            MAX = Math.max(total, MAX);
             return;
         }
-//        for(int i = 0; i < list.)
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[0].length; j++) {
+                if (!visited[i][j]) {
+                    if ((i > y) || (i == y && x <= j)) {
+                        arr[depth] = i;
+                        arr[depth + 1] = j;
+                        visited[i][j] = true;
+                        for (int k = 0; k < 4; k++) {
+                            int nextY = i + dy[k];
+                            int nextX = j + dx[k];
+                            if (checking(nextY, nextX)) {
+                                visited[nextY][nextX] = true;
+                            }
+                        }
+                        backTracking(depth + 2, i, j);
+                        visited[i][j] = false;
+                        for (int k = 0; k < 4; k++) {
+                            int nextY = i + dy[k];
+                            int nextX = j + dx[k];
+                            if (checking(nextY, nextX)) {
+                                visited[nextY][nextX] = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static boolean checking(int y, int x) {
