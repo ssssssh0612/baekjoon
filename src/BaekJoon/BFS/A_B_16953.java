@@ -10,82 +10,54 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class A_B_16953 {
-    //정수 A를 B로 바꾸려고 한다. 가능한 연산은 다음과 같은 두 가지이다.
     //2를 곱한다.
     //1을 수의 가장 오른쪽에 추가한다.
-    //A를 B로 바꾸는데 필요한 연산의 최솟값을 구해보자.
-    static int startNum;
-    static int endNum;
     static boolean[] visited;
     static boolean flag = false;
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         input(br);
-        bfs();
-        if (!flag) {
+    }
+    public static void input(BufferedReader br) throws IOException{
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int startNum = Integer.parseInt(st.nextToken());
+        int endNum = Integer.parseInt(st.nextToken());
+        visited = new boolean[endNum + 1];
+        bfs(startNum,endNum);
+        if(!flag){
             System.out.println(-1);
         }
     }
-
-    public static void input(BufferedReader br) throws IOException {
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        startNum = Integer.parseInt(st.nextToken());
-        endNum = Integer.parseInt(st.nextToken());
-        visited = new boolean[1000000001];
-    }
-
-    public static void bfs() {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{addNumber(startNum), 1});
-        queue.add(new int[]{startNum * 2, 1});
-        if(checking(startNum * 2)){
-            visited[startNum * 2] = true;
-        }
-        if(checking(addNumber(startNum))){
-            visited[addNumber(startNum)] = true;
-        }
-        while (!queue.isEmpty()) {
-            int[] now = queue.poll();
-            System.out.println(now[0]);
-            if (now[0] == endNum) {
+    public static void bfs(int startNum, int endNum){
+        Queue<long[]> queue = new LinkedList<>();
+        queue.add(new long[]{startNum, 0});
+        while(!queue.isEmpty()){
+            long[] now = queue.poll();
+            long number = now[0];
+            long count = now[1];
+            if(number == endNum){
                 flag = true;
-                System.out.println(now[1] + 1);
+                System.out.println(count+1);
                 return;
             }
-            int nextNum = now[0] * 2;
-            int nextNum2 = addNumber(now[0]);
-            if (checking(nextNum) && !visited[nextNum]) {
-                queue.add(new int[]{now[0] * 2, now[1] + 1});
-                visited[nextNum] = true;
+            for(int i = 0; i < 2 ; i++){
+                if(i == 0 && (changeNumberX(number) <= endNum) && !visited[(int) changeNumberX(number)]){
+                    // 2를 곱한값
+                    queue.add(new long[]{changeNumberX(number) , count + 1});
+                    visited[(int) changeNumberX(number)] = true;
+                }else if( i == 1 && (changeNumberOne(number) <= endNum) && !visited[(int) changeNumberOne(number)]){
+                    // 1을 수의 가장 오른쪽에 추가
+                    queue.add(new long[]{changeNumberOne(number) , count + 1});
+                    visited[(int) changeNumberOne(number)] = true;
+                }
             }
-            if (checking(nextNum2) && !visited[nextNum2]) {
-                queue.add(new int[]{nextNum2, now[1] + 1});
-                visited[nextNum2] = true;
-            }
         }
     }
 
-    public static boolean checking(int number) {
-        return number >= 0 && number < 100000001;
+    public static long changeNumberX(long number){
+        return number * 2;
     }
-
-    public static int addNumber(int number) {
-        String str = number + "1";
-        int returnNumber = 1;
-        int index = str.length() - 1;
-        for (int i = 0; i < str.length() - 1; i++) {
-            int checkingNumber = str.charAt(i) - '0';
-            returnNumber += checkingNumber * numberX(index);
-            index--;
-        }
-        return returnNumber;
-    }
-
-    public static int numberX(int number) {
-        if (number == 0) {
-            return 1;
-        }
-        return 10 * numberX(number - 1);
+    public static long changeNumberOne(long number){
+        return (number * 10) + 1;
     }
 }
