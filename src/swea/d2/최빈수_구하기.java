@@ -10,23 +10,30 @@ public class 최빈수_구하기 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int testCase = Integer.parseInt(br.readLine());
         for(int i = 0; i < testCase; i++){
-            int[] arr= new int[101];
-            int caseNumber = Integer.parseInt(br.readLine());
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for(int j = 0; j < 1000; j ++){
-                int number = Integer.parseInt(st.nextToken());
-                arr[number]++;
-            }
-            int maxNum = Integer.MIN_VALUE;
-            int maxIndex = Integer.MIN_VALUE;
-//            System.out.println(arr[4] + " " + arr[76]);
-            for(int j = 0; j < 100; j ++){
-                if(maxNum <= arr[j]){
-                    maxNum = arr[j];
-                    maxIndex = j;
-                }
-            }
-            System.out.println("#"+caseNumber+" "+maxIndex);
+            int testCaseNumber = Integer.parseInt(br.readLine());
+            int[] number = new int[101];
+            int result = input(br, number);
+            System.out.println("#" + (testCaseNumber) + " " + result);
         }
+    }
+    public static int input(BufferedReader br, int[] arr) throws IOException{
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i = 0; i < 1000; i++){
+            int number = Integer.parseInt(st.nextToken());
+            arr[number]++;
+        }
+        int maxValue = 0;
+        for(int i = 0; i <= 100; i++){
+            if( maxValue < arr[i]){
+                maxValue = arr[i];
+            }
+        }
+        int maxIndex = 0 ;
+        for(int i = 0; i <= 100; i++){
+            if( maxValue == arr[i]){
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
     }
 }
