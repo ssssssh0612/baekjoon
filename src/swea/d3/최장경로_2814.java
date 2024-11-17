@@ -8,53 +8,60 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class 최장경로_2814 {
+    static int nodeCount;
+    static int edgeCount;
     static int result = Integer.MIN_VALUE;
-
+    static List<List<Integer>> list = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int testCase = Integer.parseInt(br.readLine());
-        for (int i = 0; i < testCase; i++) {
-            List<List<Integer>> list = new ArrayList<>();
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int n = Integer.parseInt(st.nextToken());
-            int m = Integer.parseInt(st.nextToken());
-            for (int j = 0; j < n + 1; j++) {
-                list.add(new ArrayList<>());
-            }
-            if (m == 0) {
+        for(int i = 0 ; i < testCase; i++){
+            input(br);
+            if(edgeCount == 0){
                 System.out.println("#" + (i + 1) + " " + 1);
                 continue;
-            } else {
-                for (int j = 0; j < m; j++) {
-                    st = new StringTokenizer(br.readLine());
-                    int a = Integer.parseInt(st.nextToken());
-                    int b = Integer.parseInt(st.nextToken());
-                    list.get(a).add(b);
-                    list.get(b).add(a);
-                }
-//                System.out.println(list);
-                for (int j = 1; j < n + 1; j++) {
-                    boolean[] visited = new boolean[n + 1];
-                    visited[j] = true;
-                    backTracking(j, visited, list, 1);
-                }
-                System.out.println("#" + (i + 1) + " " + result);
             }
-            result = 0;
+            for(int j = 1; j <= nodeCount; j++){
+                boolean[] visited = new boolean[nodeCount + 1];
+                dfs(j,visited,0);
+            }
+            System.out.println("#" + (i + 1) + " " + result);
+            result = Integer.MIN_VALUE;
+            clear();
         }
     }
-
-    public static void backTracking(int number, boolean[] visited, List<List<Integer>> list, int count) {
-        if (result < count) {
+    public static void clear(){
+        for(int i = 0 ; i < nodeCount + 1; i++){
+            list.get(i).clear();
+        }
+    }
+    public static void dfs(int startNode, boolean[] visited,int count){
+        int length = list.get(startNode).size();
+        if( count > result ){
             result = count;
         }
-        for (int i = 0; i < list.get(number).size(); i++) {
-            int num = list.get(number).get(i);
-            if (!visited[num]) {
-                visited[num] = true;
-                backTracking(num, visited, list, count + 1);
-                visited[num] = false;
+        for(int i = 0; i < length; i++){
+            int nowNode = list.get(startNode).get(i);
+            if(!visited[nowNode]){
+                visited[nowNode] = true;
+                dfs(nowNode, visited, count + 1);
+                visited[nowNode] = false;
             }
+        }
+    }
+    public static void input(BufferedReader br) throws IOException{
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        nodeCount = Integer.parseInt(st.nextToken());
+        edgeCount = Integer.parseInt(st.nextToken());
+        for(int i = 0 ; i < nodeCount + 1; i++){
+            list.add(new ArrayList<>());
+        }
+        for(int i = 0 ; i < edgeCount; i ++){
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            list.get(a).add(b);
+            list.get(b).add(a);
         }
     }
 }
