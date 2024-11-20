@@ -49,8 +49,7 @@ public class 말이_되고픈_원숭이_1600 {
     public static void bfs() {
         Queue<int[]> queue = new LinkedList<>();
         // y, x, 움직임 횟수, K
-        int count = movingCount;
-        queue.add(new int[]{0, 0, 0, count});
+        queue.add(new int[]{0, 0, 0, 0});
         visited[0][0][0] = true;
         while (!queue.isEmpty()) {
             int[] now = queue.poll();
@@ -59,6 +58,7 @@ public class 말이_되고픈_원숭이_1600 {
             if( y == graph.length - 1 && x == graph[0].length - 1){
                 result = Math.min(now[2],result);
                 checking = true;
+                break;
             }
 //            System.out.println("y = " + y + " x = " + x + " count = " + now[3]);
             for (int i = 0; i < 4; i++) {
@@ -69,13 +69,13 @@ public class 말이_되고픈_원숭이_1600 {
                     visited[nextY][nextX][now[3]] = true;
                 }
             }
-            if (now[3] != 0) {
+            if (now[3] < movingCount) {
                 for (int i = 0; i < 8; i++) {
                     int nextY = y + hDy[i];
                     int nextX = x + hDx[i];
                     if (checking(nextY, nextX) && !visited[nextY][nextX][now[3]] && graph[nextY][nextX] == 0) {
-                        queue.add(new int[]{nextY, nextX, now[2] + 1, now[3] - 1});
-                        visited[nextY][nextX][now[3] - 1] = true;
+                        queue.add(new int[]{nextY, nextX, now[2] + 1, now[3] + 1});
+                        visited[nextY][nextX][now[3]+1] = true;
                     }
                 }
             }
