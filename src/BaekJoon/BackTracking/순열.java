@@ -11,7 +11,7 @@ public class 순열 {
     private static boolean visit[]; // 중복 방지 위해 방문했는지 체크하는 배열
     private static char[] chars; // 값을 담을 배열
     private static String answer;
-    
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String line;
