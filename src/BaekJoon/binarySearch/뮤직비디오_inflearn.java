@@ -7,6 +7,8 @@ import java.util.*;
 
 public class 뮤직비디오_inflearn {
     public int count(int[] arr, int capacity) {
+        Stack<Integer> stack = new Stack<>();
+
         int cnt = 1, sum = 0;
         for (int x : arr) {
             if (sum + x > capacity) {
@@ -21,13 +23,14 @@ public class 뮤직비디오_inflearn {
         int answer = 0;
         int lt = Arrays.stream(arr).max().getAsInt();
         int rt = Arrays.stream(arr).sum();
-        while (lt < rt) {
+        while (lt <= rt) {
             int mid = (lt + rt) / 2;
             if (count(arr, mid) <= m) {
-                rt = mid;
+                answer = mid;
+                rt = mid - 1;
             } else lt = mid + 1;
         }
-        return lt;
+        return answer;
     }
 
     //int low = 0;
@@ -44,7 +47,7 @@ public class 뮤직비디오_inflearn {
     //        return low;
 
     public static void main(String[] args) {
-        Main T = new Main();
+        뮤직비디오_inflearn T = new 뮤직비디오_inflearn();
         Scanner kb = new Scanner(System.in);
         int n = kb.nextInt();
         int m = kb.nextInt();
