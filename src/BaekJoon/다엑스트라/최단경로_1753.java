@@ -49,6 +49,14 @@ public class 최단경로_1753 {
             list[start].add(new Node(end, weight));
         }
 
+        for (int i = 1; i < list.length; i++) {
+            System.out.print(" i = " + i );
+            for (int j = 0; j < list[i].size(); j++) {
+                System.out.print(" end = " + list[i].get(j).weight + " weight = " + list[i].get(j).weight);
+            }
+            System.out.println();
+        }
+
         StringBuilder sb = new StringBuilder();
         // 다익스트라 알고리즘
         dijkstra(k);
@@ -73,7 +81,9 @@ public class 최단경로_1753 {
             Node curNode = queue.poll();
             int cur = curNode.end;
 
-            if (check[cur]) continue;
+            if (check[cur]) {
+                continue;
+            }
             check[cur] = true;
 
             for (Node node : list[cur]) {
