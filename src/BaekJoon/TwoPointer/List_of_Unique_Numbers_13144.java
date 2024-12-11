@@ -8,63 +8,42 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class List_of_Unique_Numbers_13144 {
-    static int result = 0;
-    static List<Integer> arr = new ArrayList<Integer>();
-    static int max = Integer.MIN_VALUE;
+    static int N;
+    static int[] arr, cnt;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int a = Integer.parseInt(br.readLine());
+        N = Integer.parseInt(br.readLine());
+        //arr,cnt 배열만들고 값 담아주기
+        arr = new int[N + 1];
+        cnt = new int[100000 + 1];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < a; i++) {
-            arr.add(Integer.parseInt(st.nextToken()));
-            max = Math.max(max, arr.get(i));
+        for (int i = 1; i <= N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        result += a;
-        for (int i = 2; i <= arr.size(); i++) {
-            arrLength(i);
-        }
-        System.out.println(result);
+        toPoint();
     }
 
-    public static void arrLength(int length) {
-        // 만약 길이가 2면
-        // 0 1 이 길이가 2니까 length를 1빼야함
-        int start = 0;
-        int end = length - 1;
-        // 내가 보는 구간의 arr이 겹치는지 체크함
-        int[] visited = new int[max+1];
-        boolean check = true;
-        for (int i = start; i <= end; i++) {
-            if(visited[arr.get(i)] == 0) {
-                visited[arr.get(i)]++;
-            }else{
-                visited[arr.get(i)]++;
-                check = false;
+    static void toPoint() {
+
+        long ans = 0;
+
+        int l = 1;
+        int r = 0;
+        //현재 위치(l)에서 시작해서 조건 만족할때까지 r을 늘려나간다.
+        while (l <= N) {
+            //처음쓰는 숫자인지, 범위를 안넘는지 체크
+            while (r + 1 <= N && cnt[arr[r + 1]] == 0) {
+                r++; //while 조건에서 이미 확인을 했으므로 안심하고 증가.
+                cnt[arr[r]]++; //해당 수 썼으니 썼다고 표시
             }
-        }
-        if (check){
-            result++;
-        }
-        while (checking(start) && checking(end)) {
-            visited[arr.get(start)]--;
-            start++;
-            end++;
-            if (checking(end)){
-                if(visited[arr.get(end)] == 0){
-                    result++;
-                    visited[arr.get(end)]++;
-                }else{
-                    visited[arr.get(end)]++;
-                }
-            }else{
-                break;
-            }
-        }
-    }
 
-    public static boolean checking(int number) {
-        return number >= 0 && number < arr.size();
+            ans += r - l + 1;
+            //l을 한칸씩 밀면서 볼것이기 때문에 계산이 끝나고 나면 l을 한 칸 밀어준다.
+            //이전 위치의 cnt는 다음번 계산에서 제외하기 위해 cnt[arr[l]]--;
+            cnt[arr[l++]]--;
+        }
+        System.out.println(ans);
     }
-
 }
