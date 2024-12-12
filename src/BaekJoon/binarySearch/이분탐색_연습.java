@@ -3,13 +3,27 @@ package BaekJoon.binarySearch;
 public class 이분탐색_연습 {
     public static void main(String[] args) {
         int[] arr = new int[]{1,2,3,4,5,6,7,8,9,10};
+        int[] arr4 = new int[]{1,2,3,4,5,6};
         int[] arr2 = new int[]{1,1,2,2,3,3,3,3,3,3,4,4,4,5,5,5,6,7,8,9,10};
         int[] arr3 = new int[]{1,3,3,3,3,3,3,5};
 
 //        bs(arr,10);
-        System.out.println(lowerBound(arr3,3));
-        System.out.println();
-        System.out.println(upperBound(arr3,3));
+//        System.out.println(lowerBound(arr4,2));
+//        System.out.println();
+//        System.out.println(upperBound(arr3,3));
+        check();
+
+    }
+    public static void check(){
+        int[] arr = new int[10000];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i + 1 ;
+        }
+        int index = 1;
+        while (index < arr.length){
+            System.out.println(lowerBound(arr, index));
+            index++;
+        }
     }
     public static int bs(int[] array, int target){
         int low = 0;
@@ -34,6 +48,9 @@ public class 이분탐색_연습 {
     }
 
     //int[] arr2 = new int[]{1,1,2,2,3,3,3,3,3,4,4,4,5,5,5,6,7,8,9,10};
+
+
+    //int[] arr3 = new int[]{1,3,3,3,3,3,3,5};
     private static int lowerBound(int[] arr, int key) {
         int lo = 0;
         int hi = arr.length;
@@ -42,7 +59,7 @@ public class 이분탐색_연습 {
         while (lo < hi) {
 
             int mid = (lo + hi) / 2; // 중간위치를 구한다.
-            System.out.println("low = " + lo + " , mid = " + mid + " high = " + hi);
+//            System.out.println("low = " + lo + " , mid = " + mid + " high = " + hi);
 
             if (key <= arr[mid]) {
                 hi = mid;
@@ -53,7 +70,7 @@ public class 이분탐색_연습 {
         }
         return lo;
     }
-
+//  int[] arr3 = new int[]{1,3,3,3,3,3,3,5};
     private static int upperBound(int[] arr, int key) {
         int lo = 0;
         int hi = arr.length;
