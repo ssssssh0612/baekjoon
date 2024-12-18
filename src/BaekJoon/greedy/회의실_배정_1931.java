@@ -13,8 +13,10 @@ public class 회의실_배정_1931 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
+		/*안녕
+		잘가랑
+		어쩔tv
 
-		/*
 		  time[][0] 은 시작시점을 의미
 		  time[][1] 은 종료시점을 의미
 		*/
