@@ -46,6 +46,8 @@ public class 에디터_1406 {
                 sb.append(list.get(i));
             }
         }
+
+        // abcd
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));//writer선언
         bw.write(sb + "\n");
     }
