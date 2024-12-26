@@ -8,67 +8,35 @@ public class A와B_12904 {
     static boolean flag = false;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        input(br);
+        String a = br.readLine();
+        String b = br.readLine();
+        checking(a,b);
         if(flag){
             System.out.println(1);
-        }else{
-            System.out.println(0);
+            return;
         }
+        System.out.println(0);
     }
-    public static void input(BufferedReader br) throws IOException {
-        String a = br.readLine();
-        StringBuilder sb1 = new StringBuilder(a);
-        String b = br.readLine();
-        StringBuilder sb2 = new StringBuilder(b);
-        step(sb1,sb2);
-    }
-
-    public static void step(StringBuilder a, StringBuilder b){
-        while(a.length() < b.length()){
-            if(b.charAt(b.length() - 1) == 'A'){
-                b.deleteCharAt(b.length() - 1);
-            }else{
-                b.deleteCharAt(b.length() - 1);
-                b.reverse();
-            }
-        }
-        if(a.toString().contentEquals(b)){
-            flag = true;
-        }
-    }
-
     //문자열의 뒤에 A를 추가한다.
     //문자열을 뒤집고 뒤에 B를 추가한다.
-
-    public static void addA(String str, String result){
-        if(str.length() == result.length()){
-            if(str.equals(result)){
+    // b -> a
+    // b 문자열 맨 뒤에 B 가 있다면
+    // b 문자열 맨 뒤에 A 가 있다면
+    public static void checking(String a, String b){
+        if(a.length() == b.length()){
+            if(a.equals(b)){
                 flag = true;
                 return;
             }else{
                 return;
             }
         }
-        str = str + "A";
-        addA(str,result);
-        addB(str,result);
-    }
-    public static void addB(String str, String result){
-        if(str.length() == result.length()){
-            if(str.equals(result)){
-                flag = true;
-                return;
-            }else{
-                return;
-            }
+        if(b.charAt(b.length() - 1) == 'A'){
+            String newB1 = new StringBuilder(b).deleteCharAt(b.length() - 1).toString();
+            checking(a,newB1);
+        }else{
+            String newB2 = new StringBuilder(b).deleteCharAt(b.length() - 1).reverse().toString();
+            checking(a,newB2);
         }
-        StringBuilder newString = new StringBuilder();
-        // 문자열을 뒤집고 뒤에 B를 추가
-        for(int i = str.length() - 1 ; i >= 0; i--){
-            newString.append(str.charAt(i));
-        }
-        newString.append("B");
-        addA(newString.toString(),result);
-        addB(newString.toString(),result);
     }
 }
