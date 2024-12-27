@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class compare예제 {
-    public static class Student{
+    public static class Student implements Comparable<Student> {
         int grade;
         int age;
         String name;
@@ -15,23 +15,27 @@ public class compare예제 {
             this.grade = grade;
             this.age = age;
         }
+
+        @Override
+        public int compareTo(Student student){
+            if(this.age - student.age == 0){
+                return this.grade - student.grade;
+            }
+            return this.age - student.age;
+        }
     }
     public static void main(String[] args) {
-        List<int[]> list = new ArrayList<>();
-        list.add(new int[]{3, 4, 5});
-        list.add(new int[]{1, 2, 3});
-        list.add(new int[]{2, 3, 4});
-        list.add(new int[]{5, 6, 3});
-        list.add(new int[]{4, 2, 1});
-        list.add(new int[]{5, 2, 9});
-        list.add(new int[]{3, 4, 6});
         List<Student> studentList = new ArrayList<>();
         studentList.add(new Student("서상현", 4, 25));
         studentList.add(new Student("서상현1", 2, 22));
-        studentList.add(new Student("서상현22", 3, 22));
-        studentList.add(new Student("서상현333", 1, 20));
-        studentList.add(new Student("서상현4444", 6, 21));
-        studentList.add(new Student("서상현55555", 2, 29));
+        studentList.add(new Student("서상현2", 3, 22));
+        studentList.add(new Student("서상현3", 1, 20));
+        studentList.add(new Student("서상현4", 6, 21));
+        studentList.add(new Student("서상현5", 2, 29));
+        Collections.sort(studentList);
+        for(Student student : studentList){
+            System.out.println(student.name);
+        }
 
         Comparator<Student> comparatorStudent = new Comparator<Student>(){
             @Override
@@ -56,18 +60,11 @@ public class compare예제 {
         for (Student student : studentList) {
             System.out.println(student.age + ", " + student.name + ", " + student.grade);
         }
-        System.out.println();
 
+//        for (int[] arr : list) {
+//            System.out.println(arr[0] + ", " + arr[1] + ", " + arr[2]);
+//        }
 
-
-
-
-
-
-//        Collections.sort(list, comparator);
-        for (int[] arr : list) {
-            System.out.println(arr[0] + ", " + arr[1] + ", " + arr[2]);
-        }
         Comparator<int[]> comparator = new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
@@ -88,8 +85,5 @@ public class compare예제 {
                 return result;
             }
         };
-
-
-
     }
 }

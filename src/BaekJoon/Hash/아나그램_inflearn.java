@@ -27,6 +27,7 @@ public class 아나그램_inflearn {
                 return;
             }
         }
+
         System.out.println("YES");
 
 

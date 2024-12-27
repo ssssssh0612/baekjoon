@@ -18,6 +18,7 @@ public class 학급회장_inflearn {
         }
         int max = Integer.MIN_VALUE;
         char result = ' ';
+
         for(Character ch : hashMap.keySet()){
 //            System.out.println(hashMap.get(ch));
             if( max < hashMap.get(ch)){
@@ -25,6 +26,7 @@ public class 학급회장_inflearn {
                 result = ch;
             }
         }
+
         System.out.println(result);
 
 
