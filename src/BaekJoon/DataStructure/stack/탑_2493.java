@@ -19,37 +19,14 @@ public class 탑_2493 {
         }
         int[] result = new int[a];
         Stack<Integer> stack = new Stack<>();
-        for (int i = arr.length - 1; i >= 0; i--) {
-            if (!stack.isEmpty()) {
-                int peekNum = arr[stack.peek()];
-                int newNum = arr[i];
-                if (peekNum == newNum) {
-                    stack.add(i);
-                } else if (peekNum > newNum) {
-                    stack.add(i);
-                } else {
-                    while (!stack.isEmpty() && peekNum < newNum) {
-                        int index = stack.pop();
-                        result[index] = i + 1;
-                        if (!stack.isEmpty()) {
-                            peekNum = arr[stack.peek()];
-                        }
-
-                    }
-                    stack.add(i);
-                }
-            } else {
-                stack.push(i);
+        for(int i = arr.length - 1; i >= 0; i --){
+            while(!stack.isEmpty() && arr[stack.peek()] < arr[i]){
+                result[stack.pop()] = i + 1;
             }
+            stack.push(i);
         }
-        while (!stack.isEmpty()) {
-            int index = stack.pop();
-            result[index] = 0;
-        }
-
-
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(result[i] + " ");
+        for(int i = 0 ; i < result.length; i++){
+            System.out.print(result[i] +" ");
         }
     }
 }
