@@ -3,10 +3,7 @@ package BaekJoon.Hash;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class 베스트셀러_1302 {
     public static void main(String[] args) throws IOException {
@@ -32,6 +29,7 @@ public class 베스트셀러_1302 {
         // list 정렬의 기본은 오름차순
         System.out.println(list.get(0));
 
-        // 준규가 가장많이 갖고있는 정수 출력
+        Queue<Integer> queue = new LinkedList<>();
+        System.out.println(queue.size());
     }
 }
