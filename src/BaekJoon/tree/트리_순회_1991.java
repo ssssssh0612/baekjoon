@@ -11,7 +11,6 @@ public class 트리_순회_1991 {
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
         int N = Integer.parseInt(st.nextToken());
-
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             char root = st.nextToken().charAt(0);
@@ -44,18 +43,22 @@ public class 트리_순회_1991 {
 
     public static void insertNode(Node tmp, char root, char left, char right) {
         if (tmp.value == root) {
+            System.out.println(" value == root ");
             tmp.left = (left == '.' ? null : new Node(left, null, null));
             tmp.right = (right == '.' ? null : new Node(right, null, null));
         } else {
             if (tmp.left != null) {
+                System.out.println(" left != root ");
                 insertNode(tmp.left, root, left, right);
             }
             if (tmp.right != null) {
+                System.out.println(" right != root ");
                 insertNode(tmp.right, root, left, right);
             }
         }
     }
-
+    // 전위순회
+    // 현재 노드 → 왼쪽 서브트리 → 오른쪽 서브트리
     private static void preOrder(Node node) {
         if (node == null) { // 더 이상 값이 없을 때 까지
             return;
@@ -64,7 +67,8 @@ public class 트리_순회_1991 {
         preOrder(node.left); // 왼쪽 노드 탐색
         preOrder(node.right); // 오른쪽 노드 탐색
     }
-
+    // 중위순회
+    // 왼쪽 서브트리 → 현재 노드 → 오른쪽 서브트리
     private static void inOrder(Node node) {
         if (node == null) { // 더 이상 값이 없을 때 까지
             return;
@@ -73,7 +77,8 @@ public class 트리_순회_1991 {
         System.out.print(node.value); // 출력
         inOrder(node.right); // 오른쪽 노드 탐색
     }
-
+    // 후위순회
+    // 왼쪽 서브트리 → 오른쪽 서브트리 → 현재 노드
     private static void postOrder(Node node) {
         if (node == null) { // 더 이상 값이 없을 때 까지
             return;
