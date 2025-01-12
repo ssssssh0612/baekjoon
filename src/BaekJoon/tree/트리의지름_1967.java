@@ -5,52 +5,44 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class 트리의지름_1967 {
-    static ArrayList<Integer[]> graph[];
-    static boolean visited[];
     static int max = 0;
-
+    static List<List<int[]>> list;
+    static boolean[] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
         int n = Integer.parseInt(br.readLine());
-        visited = new boolean[n + 1];
-        graph = new ArrayList[n + 1];
-        for (int i = 1; i < graph.length; i++) {
-            graph[i] = new ArrayList<>();
+        list = new ArrayList<>();
+        for(int i = 0 ; i < n + 1; i++){
+            list.add(new ArrayList<>());
         }
-        for (int i = 0; i < n - 1; i++) {
-            st = new StringTokenizer(br.readLine());
-            int node1 = Integer.parseInt(st.nextToken());
-            int node2 = Integer.parseInt(st.nextToken());
+        for(int i = 0; i < n - 1; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
-            graph[node1].add(new Integer[]{node2, cost});
-            graph[node2].add(new Integer[]{node1, cost});
+            list.get(a).add(new int[]{b,cost});
+            list.get(b).add(new int[]{a,cost});
         }
-        for (int i = 1; i < graph.length; i++) {
-            Arrays.fill(visited, false);
-            dfs(i, 0);
+        for(int i = 1 ; i <= n; i++){
+            boolean[] visited = new boolean[n + 1];
+            dfs(i,0, visited);
         }
         System.out.println(max);
-
-
     }
-
-    public static void dfs(int node, int sum) {
-        visited[node] = true;
+    public static void dfs(int startNode, int sum, boolean[] visited){
         max = Math.max(sum, max);
-
-        for (Integer[] temp : graph[node]) {
-            int next = temp[0];
-            int cost = temp[1];
-            if (!visited[next]) {
-                dfs(next, sum + cost);
+        visited[startNode] = true;
+        for(int i = 0 ; i < list.get(startNode).size(); i++){
+            int node = list.get(startNode).get(i)[0];
+            int cost = list.get(startNode).get(i)[1];
+            if(!visited[node]){
+                dfs(node,sum+cost,visited);
             }
         }
-
-
     }
 }
+
