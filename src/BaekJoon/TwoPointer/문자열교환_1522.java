@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class 문자열교환_1522 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = br.readLine();
         int aCount = 0;
@@ -36,4 +36,5 @@ public class 문자열교환_1522 {
         }
         System.out.println(result);
     }
+
 }
