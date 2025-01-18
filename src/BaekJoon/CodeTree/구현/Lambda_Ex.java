@@ -11,7 +11,7 @@ public class Lambda_Ex {
         MyFunction f = () -> { System.out.println("f입니다."); };
         f.myMethod();
         Object obj = (Object) (MyFunction) () -> { System.out.println("obj입니다.");};
-        String str = ((Object) (MyFunction) () -> { System.out.println("str입니다.")}).toString();
+//        String str = ((Object) (MyFunction) () -> { System.out.println("str입니다.")}).toString();
         ((MyFunction) obj).myMethod();
 
     }
