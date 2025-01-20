@@ -1,5 +1,6 @@
 package BaekJoon.CodeTree.modernjava;
 
+import BaekJoon.CodeTree.modernjava.appleFilter.AppleFilter;
 import BaekJoon.CodeTree.modernjava.appleFilter.AppleFilterPrintAppleIsHandsome;
 import BaekJoon.CodeTree.modernjava.appleFilter.AppleFilterPrintAppleWeight;
 
@@ -22,5 +23,13 @@ public class MainAppleEx {
         ServiceApple.prettyPrintApple(appleList, new AppleFilterPrintAppleIsHandsome());
         ServiceApple.prettyPrintApple(appleList, new AppleFilterPrintAppleWeight());
 
+
+        // 이렇게 익명클래스로도 선언할 수 있다.
+        ServiceApple.prettyPrintApple(appleList, new AppleFilter() {
+            @Override
+            public String printApple(Apple apple){
+                return "";
+            }
+        });
     }
 }
