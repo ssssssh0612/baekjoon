@@ -26,12 +26,29 @@ public class BaekJoon1912 {
         }
         dp[0] = arr[0];
         max = arr[0];
-
-        for(int i = 1 ; i < N ; i++) {
-            dp[i] = Math.max(dp[i-1] + arr[i], arr[i]);
-            max = Math.max(max, dp[i]);
+        for(int i = 1 ; i < arr.length; i++){
+            dp[i] = Math.max(dp[i - 1] + arr[i] , arr [i]);
+            max = Math.max(max,dp[i]);
         }
-        System.out.println(max);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
+//        for(int i = 1 ; i < N ; i++) {
+//            dp[i] = Math.max(dp[i-1] + arr[i], arr[i]);
+//            max = Math.max(max, dp[i]);
+//        }
+//        System.out.println(max);
