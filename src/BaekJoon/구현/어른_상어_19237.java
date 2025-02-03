@@ -81,9 +81,7 @@ public class 어른_상어_19237 {
 
         for(int i = 0 ; i < sharkDir.length; i++){
             sharkDir[i] = Integer.parseInt(st.nextToken()) - 1;
-            System.out.print(sharkDir[i]+" ");
         }
-        System.out.println();
 
         for(int i = 0 ; i < sharkDir.length; i++){
             int[][] dir = new int[4][4];
@@ -108,7 +106,7 @@ public class 어른_상어_19237 {
             for (int i = 0; i < room.length; i++) {
                 for (int j = 0; j < room.length; j++) {
                     Room newRoom = room[i][j];
-                    if(newRoom.smell != null){
+                    if(newRoom.smell != null && newRoom.sharkList.isEmpty()){
                         newRoom.smell.smell--;
                         if(newRoom.smell.smell == 0){
                             newRoom.smell = null;
@@ -170,20 +168,14 @@ public class 어른_상어_19237 {
                         // 현재 방향 우선순위를 돌면서 냄새가 안나는 방향으로 방을 옮기기
                         int[][] sharkDirArr = shark.dirArr;
                         int[] sharkDir = sharkDirArr[shark.dir];
-                        for(int k = 0 ; k < sharkDir.length; k++){
-                            System.out.print(" dir = " + sharkDir[k]);
-                        }
-                        System.out.println();
                         for (int k = 0; k < 4; k++) {
                             int dir = sharkDir[k];
-                            System.out.println("dir = "+dir);
                             int nextY = i + dy[dir];
                             int nextX = j + dx[dir];
                             if (checking(nextY, nextX) && room[nextY][nextX].smell == null) {
                                 // 상어 추가
                                 shark.dir = dir;
                                 room[nextY][nextX].sharkList.add(shark);
-                                System.out.println("nextY = " + nextY + " nextX = " + nextX);
                                 // 현재 위치 상어 삭제
                                 room[i][j].sharkList.remove(0);
                                 break;
