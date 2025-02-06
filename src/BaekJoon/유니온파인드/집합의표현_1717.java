@@ -25,35 +25,35 @@ public class 집합의표현_1717 {
             int number = Integer.parseInt(st.nextToken());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-
             if (number == 0) {
                 union(a, b);
             } else {
-                if (findRoot(a) == findRoot(b)) {
-                    sb.append("yes").append("\n");
+                if (find(a) == find(b)) {
+                    sb.append("YES").append("\n");
                 } else {
-                    sb.append("no").append("\n");
+                    sb.append("NO").append("\n");
                 }
             }
         }
+
         System.out.println(sb);
     }
 
-    // 경로 압축이 적용된 find 메서드
-    public static int findRoot(int number) {
+    public static void union(int a, int b) {
+        int A = find(a);
+        int B = find(b);
+
+        if (A > B) {
+            arr[A] = B;
+        } else {
+            arr[B] = A;
+        }
+    }
+
+    public static int find(int number) {
         if (arr[number] == number) {
             return number;
         }
-        return arr[number] = findRoot(arr[number]); // 경로 압축 적용
-    }
-
-    // 유니온 연산 (루트 노드를 찾아 병합)
-    public static void union(int x, int y) {
-        int rootX = findRoot(x);
-        int rootY = findRoot(y);
-
-        if (rootX != rootY) {
-            arr[rootY] = rootX; // 한쪽 트리에 합침
-        }
+        return arr[number] = find(arr[number]);
     }
 }
