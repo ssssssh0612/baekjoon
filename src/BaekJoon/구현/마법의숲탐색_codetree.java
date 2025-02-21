@@ -39,9 +39,6 @@ public class 마법의숲탐색_codetree {
             st = new StringTokenizer(br.readLine());
             int start = Integer.parseInt(st.nextToken()) - 1;
             int dir = Integer.parseInt(st.nextToken());
-            if(i == 6){
-                System.out.println("시작!");
-            }
             movingStart(start, dir, i+1);
         }
         System.out.println(resultCount);
@@ -50,7 +47,7 @@ public class 마법의숲탐색_codetree {
     public static void movingStart(int start, int dir, int number){
         // 일단 정령과 함께 골렘을 떨구고 검사해보자
         int[] pos = moving(start, dir, number);
-        checkGraph();
+//        checkGraph();
         // 현재 정령의 시작점이 가능한지
         if (startChecking()) {
             // 정령 마지막 위치 반환받고 해당 위치에서 bfs 돌기
@@ -87,7 +84,7 @@ public class 마법의숲탐색_codetree {
         boolean[][] visited = new boolean[graph.length][graph[0].length];
         visited[y][x] = true;
         queue.add(new int[]{y, x});
-        System.out.println(y + " " + x);
+//        System.out.println(y + " " + x);
         int maxY = Integer.MIN_VALUE;
         while(!queue.isEmpty()){
             int[] now = queue.poll();
@@ -95,7 +92,7 @@ public class 마법의숲탐색_codetree {
             if(now[0] > maxY){
                 maxY = now[0];
             }
-            System.out.println("now[0] = " + now[0] + " " + "now[1] = " + now[1]);
+//            System.out.println("now[0] = " + now[0] + " " + "now[1] = " + now[1]);
             for(int i = 0 ; i < 4; i++){
                 int nextY = now[0] + dy[i];
                 int nextX = now[1] + dx[i];
@@ -116,53 +113,91 @@ public class 마법의숲탐색_codetree {
             }
         }
         resultCount += maxY - 2;
-        System.out.println("maxY = " + maxY);
-        System.out.println(resultCount);
+//        System.out.println("추가하는 값은 !"+ (maxY - 2));
+//        System.out.println("maxY = " + maxY);
+//        System.out.println(resultCount);
     }
 
     public static int[] moving(int start, int dir, int number){
         // 밑으로 최대한 움직이기
         int y = 1;
         int x = start;
-
+        int newDir = dir;
         while(true){
-            boolean flag = true;
+            boolean flag1 = true;
             for(int i = 0 ; i < 3; i++){
                 int startY = y + movingDownY[i];
                 int startX = x + movingDownX[i];
+//                System.out.println("startY = " + startY + " startX = " + startX + " ");
                 if(checking(startY, startX) && graph[startY][startX] == 0){
                     continue;
                 }else{
-                    flag = false;
+                    flag1 = false;
                     break;
                 }
             }
-            if(flag){
-                y = y + dy[2];
-                x = x + dx[2];
+            if(flag1){
+                y = y + 1;
+                x = x + 0;
+                continue;
+            }
+
+            boolean flag2 = true;
+            for(int i = 0 ; i < 5; i++){
+                int nextY = y + movingLeftY[i];
+                int nextX = x + movingLeftX[i];
+                if(checking(nextY, nextX) && graph[nextY][nextX] == 0){
+                    continue;
+                }else{
+                    flag2 = false;
+                    break;
+                }
+            }
+            if(flag2){
+                y = y + 1;
+                x = x + (-1);
+                newDir--;
+                if(newDir == -1){
+                    newDir = 3;
+                }
+                continue;
+            }
+
+            boolean flag3 = true;
+            for(int i = 0 ; i < 5; i++){
+                int nextY = y + movingRightY[i];
+                int nextX = x + movingRightX[i];
+                if(checking(nextY, nextX) && graph[nextY][nextX] == 0){
+                    continue;
+                }else{
+                    flag3 = false;
+                    break;
+                }
+            }
+            if(flag3){
+                y = y + 1;
+                x = x + 1;
+                newDir++;
+                if(newDir == 4){
+                    newDir = 0;
+                }
             }else{
                 break;
             }
         }
-        int[] pos = leftMoving(y, x, dir);
 
-        int[] pos2 = rightMoving(pos[0], pos[1], pos[2]);
 
-        int newY = pos2[0];
-        int newX = pos2[1];
-        int newDir = pos2[2];
-        System.out.println(" pos2[0] = " + pos2[0] + " " + " pos1[1] = " + pos2[1]);
-        graph[newY][newX] = number;
+        graph[y][x] = number;
         for(int i = 0 ; i < 4; i ++){
-            int nextY = newY + dy[i];
-            int nextX = newX + dx[i];
+            int nextY = y + dy[i];
+            int nextX = x + dx[i];
             if(newDir == i){
                 graph[nextY][nextX] = -number;
             }else{
                 graph[nextY][nextX] = number;
             }
         }
-        return pos2;
+        return new int[]{y, x};
         // 마지막 위치
     }
 
@@ -193,7 +228,7 @@ public class 마법의숲탐색_codetree {
                 break;
             }
         }
-        return new int[]{startY, startX, newDir};
+        return new int[]{0};
     }
     public static int[] rightMoving(int y, int x, int dir){
         int startY = y;
