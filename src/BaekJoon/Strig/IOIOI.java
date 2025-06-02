@@ -13,47 +13,51 @@ public class IOIOI {
         String str = br.readLine();
 
         StringBuilder sb = new StringBuilder("IOI");
-        for(int i = 1; i < num; i++){
+        for (int i = 1; i < num; i++) {
             sb.append("OI");
         }
 
         String compare = sb.toString();
-        int index = 0;
+
+        int start = 0;
+        int end = 0;
         int count = 0;
-        while(index < length){
-            if(index + compare.length() > length){
-                // 더이상 검사할 이유가 없어 종료
+        // 일단 I로 시작하는 애를 찾기
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == 'I') {
+                start = i;
+                end = i;
                 break;
             }
-            // 현재 인덱스부터 검사하기,
-            boolean flag = true;
-            for(int i = 0 ; i < compare.length(); i++){
-                // 하다가 다른게 나오면 해당 인덱스부터 다시시작
-                int newIndex = index + i;
-                if(newIndex >= length){
-                    flag = false;
-                    break;
-                }
-                if(str.charAt(newIndex) == compare.charAt(i)){
-                    continue;
-                }else{
-                    if(i == 0){
-                        index = newIndex + 1;
-                    }else{
-                        index = newIndex;
-                    }
-                    flag = false;
-                    break;
-                }
-            }
-            if(!flag){
+        }
+
+        while (end < str.length()) {
+            int index = end - start;
+
+            if(start == end && (str.charAt(end) != compare.charAt(index))){
+                start++;
+                end++;
                 continue;
             }
-            // 다른게 나온다면 다시 시작
-            count++;
-            index+=2;
+
+            if (index == compare.length()) {
+                start += 2;
+                count++;
+                continue;
+            }
+
+            if (str.charAt(end) == compare.charAt(index)) {
+                end++;
+            }else{
+                start = end;
+            }
+
         }
-        System.out.println(count);
+        if(end - start == compare.length()){
+            System.out.println(count + 1);
+        }else{
+            System.out.println(count);
+        }
 
     }
 }
