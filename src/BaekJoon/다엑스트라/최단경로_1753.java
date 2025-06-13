@@ -47,6 +47,7 @@ public class 최단경로_1753 {
             int weight = Integer.parseInt(st.nextToken());
             // start에서 end로 가는 weight 가중치
             list[start].add(new Node(end, weight));
+            list[end].add(new Node(start, weight)); // 반대 방향도 추가!
         }
 
         for (int i = 1; i < list.length; i++) {
@@ -80,13 +81,14 @@ public class 최단경로_1753 {
         while (!queue.isEmpty()) {
             Node curNode = queue.poll();
             int cur = curNode.end;
-
+            System.out.println("Now Number = " + cur);
             if (check[cur]) {
                 continue;
             }
             check[cur] = true;
 
             for (Node node : list[cur]) {
+                System.out.println(node.end + " " + node.weight);
                 if (dist[node.end] > dist[cur] + node.weight) {
                     dist[node.end] = dist[cur] + node.weight;
                     queue.add(new Node(node.end, dist[node.end]));
@@ -95,4 +97,15 @@ public class 최단경로_1753 {
         }
     }
 }
+//7 9
+//1
+//1 2 4
+//1 3 5
+//1 5 1
+//1 6 1
+//6 7 1
+//7 3 1
+//2 3 4
+//2 4 5
+//4 3 6
 
