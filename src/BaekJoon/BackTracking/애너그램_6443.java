@@ -6,77 +6,40 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class 애너그램_6443 {
-    static int n;
-    static int[] check;
-    static Stack<Character> stack =new Stack<>();
-    static PriorityQueue<String> queue = new PriorityQueue<>();
+    static int[] letter = new int[26];
+    static int[] arr;
+    static StringBuilder sb;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
-
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i<n; i++){
-            char[] chars = br.readLine().toCharArray();
-            int length = chars.length;
-            check = new int[26];
-            for(char now: chars){
-                check[now-'a']++;
+        sb = new StringBuilder();
+        int n  = Integer.parseInt(br.readLine());
+        for (int i = 0; i < n; i++) {
+            String str = br.readLine();
+            arr = new int[str.length()];
+            letter = new int[26];
+            for (int j = 0; j < str.length(); j++) {
+                letter[str.charAt(j)-'a']++;
             }
-            dfs(chars,length);
-            while(!queue.isEmpty()){
-                sb.append(queue.poll()).append("\n");
-            }
+            backTracking(0,str.length(),letter);
         }
-
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
-
-    private static void dfs(char [] s, int limit) {
-        if(limit== stack.size()){
-            StringBuilder sb = new StringBuilder();
-            for(char now: stack){
-                sb.append(now);
+    public static void backTracking(int depth, int maxDepth, int[] num){
+        if(depth == maxDepth){
+            for (int i = 0; i < arr.length; i++) {
+                char ch = (char)(arr[i] + 'a');
+                sb.append(ch);
             }
-            queue.add(sb.toString());
+            sb.append("\n");
+            return;
         }
-
-        for(int i=0; i<26; i++){
-            if(check[i]>0){
-                check[i]--;
-                stack.push((char)(i+'a'));
-                dfs(s,limit);
-                stack.pop();
-                check[i]++;
+        for (int i = 0; i < 26; i++) {
+            if(letter[i]>0){
+                arr[depth] = i;
+                letter[i]--;
+                backTracking(depth + 1, maxDepth, num);
+                letter[i]++;
             }
         }
     }
-//    public static void main(String[] args) throws IOException {
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        int a = Integer.parseInt(br.readLine());
-//        List<String> arr= new ArrayList<>();
-//        for (int i = 0; i < a; i++) {
-//            String str = br.readLine();
-//            char[] strArr = str.toCharArray();
-//            Arrays.sort(strArr);
-//            arr.add(String.valueOf(strArr));
-//        }
-//        for(String str : arr){
-//            boolean[] visited = new boolean[str.length()];
-//
-//        }
-//
-//
-//    }
-//    public static void backTracking(int depth, int index, int length, boolean[] visited){
-//        if( length == depth ){
-//
-//
-//            return;
-//        }
-//        for (int i = 0; i < length; i++) {
-//            if( !visited[i] ){
-//
-//            }
-//        }
-//    }
 }
