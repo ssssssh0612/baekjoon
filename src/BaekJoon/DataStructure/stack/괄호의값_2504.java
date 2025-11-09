@@ -13,25 +13,34 @@ public class 괄호의값_2504 {
             System.out.println(0);
             return;
         }
-
     }
     // 올바른 괄호인지 체크하기
     public static boolean checking(String str){
         Stack<Character> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
         for(int i = 0 ; i < str.length(); i ++){
             char ch = str.charAt(i);
-            char checkingCh = stack.peek();
-            if(ch == '['){
-                stack.add('[');
-            }else if( ch == '{'){
-                stack.add('{');
-            }else if( ch == ']' && checkingCh == '['){
-                stack.pop();
-            }else if( ch == '}' && checkingCh == '{'){
-                stack.pop();
-            }else{
-                return false;
+            // 여는게 나온경우
+            if(ch == '[' || ch == '('){
+                // peek 할게 있다면 ?
+                if(!stack.isEmpty()){
+                    sb.append("*");
+                }else{
+                    stack.add(ch);
+                    sb.append("+");
+                    if(ch == '['){
+                        sb.append("3");
+                    }else{
+                        sb.append("2");
+                    }
+                }
             }
+
+            // 닫는게 나온경우
+            if(ch ==']' || ch == ')'){
+
+            }
+
         }
         return stack.isEmpty();
     }

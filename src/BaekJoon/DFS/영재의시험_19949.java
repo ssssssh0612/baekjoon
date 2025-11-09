@@ -18,27 +18,37 @@ public class 영재의시험_19949 {
         for (int i = 0; i < 10; i++) {
             result[i] = Integer.parseInt(st.nextToken()) - 1;
         }
-        dfs(0);
+        dfs(0, 0);
         System.out.println(check);
     }
-    public static void dfs(int depth){
+    public static void dfs(int depth, int num){
         if(depth == 10){
-            int score =0 ;
-            for (int i = 0; i < 10; i++) {
-                // 이 둘이 같으면 + 1
-                if(result[i] == arr[i]){
-                    score++;
-                }
-            }
-            if(score >= 5){
+            if(num >=5){
                 check++;
             }
+
+//            int score =0 ;
+//            for (int i = 0; i < 10; i++) {
+//                 이 둘이 같으면 + 1
+//                if(result[i] == arr[i]){
+//                    score++;
+//                }
+//            }
+//            if(score >= 5){
+//            }
             return;
         }
         for (int i = 0; i < 5; i++) {
             if((depth >= 2) && arr[depth - 1] == arr[depth - 2] && arr[depth - 1] == i) continue;
+
             arr[depth] = i;
-            dfs(depth + 1);
+            if(arr[depth] == result[depth]){
+                num++;
+            }
+            dfs(depth + 1, num);
+            if(arr[depth] == result[depth]){
+                num--;
+            }
         }
     }
 }
