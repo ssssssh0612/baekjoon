@@ -18,7 +18,7 @@ public class 팰린드로미_4096 {
             }
 
             while(true){
-                if(checking(str.toString())){
+                if(checking(str)){
                     break;
                 }else{
                     count++;
@@ -35,7 +35,7 @@ public class 팰린드로미_4096 {
             System.out.println(count);
         }
     }
-    public static boolean checking(String str){
+    public static boolean checking(StringBuilder str){
         int index = str.length() - 1;
         for (int i = 0; i < str.length() / 2; i++) {
             if(str.charAt(i) != str.charAt(index)){
